@@ -1,0 +1,28 @@
+
+{% extends "whatsapp/base.html" %}
+
+
+<html lang="en">
+
+{% block content %}
+<script>
+tinymce.init({ selector:'textarea' });
+</script>
+    <ul>
+    {% for msg in all_msg %}
+       <div class="alert alert-success" role="alert"> <li>{{msg.time_created}} - {{msg.message_from}}:<ul><li>{{msg.message_text|safe}}</li></ul></li></div>
+    {% endfor %}
+    </ul>
+    {% if not all_msg %}
+    <div class="container">
+        <div class="alert alert-warning" role="alert"><b> No Messages </b> <br></div>
+    </div>
+    {% endif %}
+<div class="container">
+    <form method="post" action="/whatsapp/{{ to_usr.id }}/">
+    {% csrf_token %}
+        <textarea type="text" id = "message" name="message" cols = "128" rows = "2" maxlength="254"></textarea>
+        <button type="submit" class="save btn btn-primary">Send!</button>
+</div>
+{% endblock %}
+</html>

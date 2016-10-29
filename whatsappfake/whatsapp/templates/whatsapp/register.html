@@ -1,0 +1,39 @@
+{% extends "whatsapp/base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if cur_usr.is_authenticated  %}
+<div class="container">
+<div class="alert alert-warning" role="alert">
+    <strong>Alredy registered please <a href = "{{ request.META.SCRIPT_NAME }}/whatsapp/logout">Logout</a> before sign in </strong>
+</div>
+</div>
+{% else %}
+<div class="container">
+<form method="post" action ="/whatsapp/register/newusr/">
+{% csrf_token %}
+<table>
+<tr>
+    <td>Username</td>
+    <td><input id="username" type="text" name="username" value={{reusername}}></td>
+</tr>
+<tr>
+    <td>Password</td>
+    <td><input id="password" type="password" name="password"></td>
+</tr>
+<tr>
+    <td>ReEnter Password</td>
+    <td><input id="repassword" type="password" name="repassword"></td>
+</tr>
+</table>
+<button type="submit" class="save btn btn-primary">Register</button>
+</form>
+</div>
+{{ error }}
+
+{% endif %}
+{% endblock %}

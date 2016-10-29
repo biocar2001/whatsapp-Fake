@@ -1,0 +1,26 @@
+{% extends "whatsapp/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+      
+    {% block content %}
+     <div class="container">
+        {% if cur_usr.is_authenticated  %}  <!-- USER IS AUTHENTICATED -->
+            <div class="alert alert-info" role="alert"><h1 class="jumbotron-heading">Lista Contactos</h1></div>
+            <br><br>
+            <lu>
+             {% for x in all_usr %}
+                    {% if x != cur_usr %}
+                        <div class="alert alert-warning" role="alert"><li><a href="/whatsapp/{{ x.id }}">{{ x.username }} </a></li></div>
+                    {% endif %}
+             {% endfor %}
+            </lu>
+        {% else %}
+        <div class="container">
+        <div class="alert alert-warning" role="alert">
+         <strong>Login Please <a href = "{{ request.META.SCRIPT_NAME }}/whatsapp/login">Login</a></strong>
+         </div>
+         </div>
+        {% endif %}
+    </div>
+    {% endblock %}
+</html>
